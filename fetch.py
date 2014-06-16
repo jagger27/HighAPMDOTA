@@ -11,10 +11,10 @@ def parseMatchup(hero, r):
 	pipe = r.pipeline()
 
 	for link in heroHTML.find_all("a", class_="hero-link"):
-		pipe.zadd(float(link.parent.find_next_sibling().contents[0][:-1]),
+		r.zadd(float(link.parent.find_next_sibling().contents[0][:-1]),
 				  str(link.string))
 		# advantages[str(link.string)] = float(link.parent.find_next_sibling().contents[0][:-1])
-	pipe.execute()
+	# pipe.execute()
 
 def fetchHero(hero):
 	return urllib2.urlopen("http://dotabuff.com/heroes/" + str(hero) + "/matchups").read()
