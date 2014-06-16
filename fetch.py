@@ -2,10 +2,6 @@ from bs4 import BeautifulSoup as Soup
 import urllib2
 import redis
 
-class RedisConnection(object):
-	def __init__(self):
-		self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
 def parseMatchup(hero, pipe):
 	heroHTML = Soup(fetchHero(hero))
 
@@ -32,4 +28,6 @@ def parse(r):
 
 	pipe.execute()
 
-parse(RedisConnection())
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+parse(r)
