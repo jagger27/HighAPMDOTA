@@ -10,7 +10,7 @@ def findCounter(r, hero, n=1):
 	return pipe.execute()
 
 def rateCounter(r, team1, team2):
-	score = []
+	score = [0, 0, 0, 0, 0]
 
 	pipe = r.pipeline()
 
