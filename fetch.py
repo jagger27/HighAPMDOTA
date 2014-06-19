@@ -30,4 +30,25 @@ def parse(r):
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-parse(r)
+def makeReverseLookupTables(r):
+	pipe = r.pipeline()
+
+	listHTML = Soup(fetchHeroList())
+	heroes = []
+	for link in listHTML.find_all("div", class_="name"):
+		heroes.append(str(link.string))
+
+	print len(heroes)
+
+	for h in heroes:
+		for other in rem(heroes, h):
+			pipe.zadd('vs ' + h, pipe.zscore(other, h), other)
+
+	pipe.execute()
+
+def rem(li, i):
+	new = list(li)
+	new.remove(i)
+	return new
+
+# parse(r)
